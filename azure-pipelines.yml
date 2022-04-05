@@ -26,8 +26,6 @@ steps:
     goals: 'package'
 - task: Docker@2
   inputs:
-    containerRegistry: 'DockerHub'
-    repository: 'cnmunro/project-management-api'
     command: 'buildAndPush'
     Dockerfile: 'ProjectManagementAPI/Dockerfile'
 - task: Maven@3
