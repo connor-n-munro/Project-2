@@ -24,3 +24,17 @@ steps:
   inputs:
     command: 'buildAndPush'
     Dockerfile: 'ProjectManagementAPI/Dockerfile'
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'Email2/pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+- task: Docker@2
+  inputs:
+    command: 'buildAndPush'
+    Dockerfile: 'Email2/Dockerfile'
