@@ -42,11 +42,11 @@ steps:
   inputs:
     command: 'buildAndPush'
     Dockerfile: 'Email2/Dockerfile'
-- task: ado-discord-webhook@1
-  inputs:
-    channelId: '960982706504757309'
-    webhookKey: '02A2rjYhvQbKBqus-nl8-6tftlCGgreOA0SCR4iJpQNs9ZZvzM2P4sCQCrEhVZYKQ4TX'
-    name: 'Azure'
-    avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png'
-    messageType: 'content'
-    content: 'Build Update for CM-MARATHON-PM: https://dev.azure.com/revature-training-uta/cm-marathon-pm/_build'
+#- task: ado-discord-webhook@1
+#  inputs:
+#    channelId: '960982706504757309'
+#    webhookKey: '02A2rjYhvQbKBqus-nl8-6tftlCGgreOA0SCR4iJpQNs9ZZvzM2P4sCQCrEhVZYKQ4TX'
+#    name: 'Azure'
+#    avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png'
+#    messageType: 'content'
+#    content: 'Build Update for CM-MARATHON-PM: https://dev.azure.com/revature-training-uta/cm-marathon-pm/_build'
