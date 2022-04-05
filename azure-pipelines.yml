@@ -10,6 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CM-MARATHON-PM'
+    workingDirectory: 'ProjectManagementAPI'
 - task: Maven@3
   inputs:
     mavenPomFile: 'ProjectManagementAPI/pom.xml'
