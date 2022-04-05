@@ -26,6 +26,7 @@ steps:
     goals: 'package'
 - task: Docker@2
   inputs:
+    repository: 'cnmunro'
     command: 'buildAndPush'
     Dockerfile: 'ProjectManagementAPI/Dockerfile'
 - task: Maven@3
@@ -40,5 +41,6 @@ steps:
     goals: 'package'
 - task: Docker@2
   inputs:
+    repository: 'cnmunro'
     command: 'buildAndPush'
     Dockerfile: 'Email2/Dockerfile'
