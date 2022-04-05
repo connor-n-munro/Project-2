@@ -27,6 +27,7 @@ steps:
 - task: Docker@2
   inputs:
     command: 'buildAndPush'
+    repository: DockerHub
     Dockerfile: 'ProjectManagementAPI/Dockerfile'
 - task: Maven@3
   inputs:
