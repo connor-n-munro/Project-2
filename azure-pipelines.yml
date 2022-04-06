@@ -29,8 +29,13 @@ steps:
 - task: Docker@2
   displayName: 'Marathon Docker'
   inputs:
+    containerRegistry: 'MarathonDockerHub'
+    repository: 'cnmunro/ProjectManagementAPI'
     command: 'buildAndPush'
-    Dockerfile: 'ProjectManagementAPI/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
+    Dockerfile: 'ProjectManagementAPI/Dockerfile' 
 - task: Maven@3
   displayName: 'Email API Maven Build'
   inputs:
