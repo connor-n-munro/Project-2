@@ -15,9 +15,7 @@ steps:
   inputs:
     SonarCloud: 'MarathonSonar'
     organization: 'cm-marathon-pm'
-    scannerMode: 'MSBuild'
-    projectKey: 'CM-MARATHON-PM'
-    projectName: 'CM-MARATHON-PM'
+    scannerMode: 'Other'
 - task: Maven@3
   displayName: 'Marathon Maven Build & Test'
   inputs:
