@@ -53,6 +53,9 @@ steps:
     containerRegistry: 'MarathonDockerHub'
     repository: 'connormunro/email-api'
     command: 'buildAndPush'
+    tags: |
+      $(Build.BuildId)
+      latest
     Dockerfile: 'Email2/Dockerfile'
 #- task: ado-discord-webhook@1
 #  displayName: 'Discord Update'
