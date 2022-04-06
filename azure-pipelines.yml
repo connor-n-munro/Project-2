@@ -10,13 +10,16 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: CmdLine@2
-  displayName: 'SonarCloud Analysis'
+- task: SonarCloudPrepare@1
+  displayName: 'SonarCloud Preparation'
   inputs:
-    script: 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CM-MARATHON-PM'
-    workingDirectory: 'ProjectManagementAPI'
+    SonarCloud: 'MarathonSonar'
+    organization: 'cm-marathon-pm'
+    scannerMode: 'MSBuild'
+    projectKey: 'CM-MARATHON-PM'
+    projectName: 'CM-MARATHON-PM'
 - task: Maven@3
-  displayName: 'Marathon Maven Build'
+  displayName: 'Marathon Maven Build & Test'
   inputs:
     mavenPomFile: 'ProjectManagementAPI/pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -25,7 +28,13 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'sonar:sonar'
+
+- task: SonarCloudPublish@1
+  displayName:  'Sonar Quality Gate'
+  inputs:
+    pollingTimeoutSec: '100'
+
 - task: Docker@2
   displayName: 'Marathon Docker'
   inputs:
