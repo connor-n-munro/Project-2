@@ -30,7 +30,7 @@ steps:
   displayName: 'Marathon Docker'
   inputs:
     containerRegistry: 'MarathonDockerHub'
-    repository: 'cnmunro/project-management-api'
+    repository: 'connormunro/project-management-api'
     command: 'buildAndPush'
     tags: |
       $(Build.BuildId)
