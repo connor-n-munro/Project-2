@@ -70,4 +70,11 @@ steps:
       latest
     Dockerfile: 'Email2/Dockerfile'
 
-$(DISCORD_ALERT)
+- task: ado-discord-webhook@1
+  inputs:
+    channelId: $(DISCORD_CHANNEL)
+    webhookKey: $(DISCORD_WEBHOOK)
+    name: 'Azure DevOps'
+    avatar: 'https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/Azure-DevOps-3.png'
+    messageType: 'content'
+    content: 'Build Update for CM-MARATHON-PM: https://dev.azure.com/revature-training-uta/cm-marathon-pm/_build'
