@@ -71,14 +71,24 @@ steps:
     Dockerfile: 'Email2/Dockerfile'
 
 - task: KubernetesManifest@0
+  displayName: "Deploy Marathon to AKS"
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
     namespace: 'default'
-    manifests: 'ProjectManagementAPI/k8s'
+    manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
+    containers: |
+      revtrainingacr.azurecr.io/project-management-api
+
+- task: KubernetesManifest@0
+  displayName: "Deploy Email API to AKS"
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: 'MarathonCluster'
+    namespace: 'default'
+    manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
     containers: |
       revtrainingacr.azurecr.io/email-api
-      revtrainingacr.azurecr.io/project-management-api
 
 #- task: ado-discord-webhook@1
 #  inputs:
