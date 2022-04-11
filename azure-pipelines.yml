@@ -78,7 +78,7 @@ steps:
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
     containers: |
-      revtrainingacr.azurecr.io/project-management-api
+      revtrainingacr.azurecr.io/project-management-api:latest
 
 - task: KubernetesManifest@0
   displayName: "Deploy Email API to AKS"
@@ -88,7 +88,7 @@ steps:
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
     containers: |
-      revtrainingacr.azurecr.io/email-api
+      revtrainingacr.azurecr.io/email-api:latest
 
 #- task: ado-discord-webhook@1
 #  inputs:
