@@ -10,27 +10,39 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: CmdLine@2
-  displayName: 'SonarCloud Analysis'
+- task: SonarCloudPrepare@1
+  displayName: 'SonarCloud Preparation'
   inputs:
-    script: 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CM-MARATHON-PM'
-    workingDirectory: 'ProjectManagementAPI'
+    SonarCloud: 'MarathonSonar'
+    organization: $(SONAR_ORG)
+    scannerMode: 'MSBuild'
+    projectKey: $(SONAR_PROJECT)
+    projectName: $(SONAR_PROJECT)
 - task: Maven@3
-  displayName: 'Marathon Maven Build'
+  displayName: 'Marathon Maven Build & Test'
   inputs:
     mavenPomFile: 'ProjectManagementAPI/pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
+    jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+    goals: 'sonar:sonar'
+
+- task: SonarCloudPublish@1
+  displayName:  'Sonar Quality Gate'
+  inputs:
+    pollingTimeoutSec: $(SONARGATE_TIMEOUT)
+
 - task: Docker@2
   displayName: 'Marathon Docker'
   inputs:
     containerRegistry: 'MarathonDockerHub'
-    repository: 'cnmunro/ProjectManagementAPI'
+    repository: $(MARATHON_IMAGE)
     command: 'buildAndPush'
     tags: |
       $(Build.BuildId)
@@ -50,14 +62,39 @@ steps:
 - task: Docker@2
   displayName: 'Email API Docker'
   inputs:
+    containerRegistry: 'MarathonDockerHub'
+    repository: $(EMAIL_IMAGE)
     command: 'buildAndPush'
+    tags: |
+      $(Build.BuildId)
+      latest
     Dockerfile: 'Email2/Dockerfile'
-- task: ado-discord-webhook@1
-  displayName: 'Discord Update'
+
+- task: KubernetesManifest@0
+  displayName: "Deploy Marathon to AKS"
   inputs:
-    channelId: '960982706504757309'
-    webhookKey: '02A2rjYhvQbKBqus-nl8-6tftlCGgreOA0SCR4iJpQNs9ZZvzM2P4sCQCrEhVZYKQ4TX'
-    name: 'Azure'
-    avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png'
-    messageType: 'content'
-    content: 'Build Update for CM-MARATHON-PM: https://dev.azure.com/revature-training-uta/cm-marathon-pm/_build'
+    action: 'deploy'
+    kubernetesServiceConnection: 'MarathonCluster'
+    namespace: 'default'
+    manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
+    containers: |
+      revtrainingacr.azurecr.io/project-management-api
+
+- task: KubernetesManifest@0
+  displayName: "Deploy Email API to AKS"
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: 'MarathonCluster'
+    namespace: 'default'
+    manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
+    containers: |
+      revtrainingacr.azurecr.io/email-api
+
+#- task: ado-discord-webhook@1
+#  inputs:
+#    channelId: $(DISCORD_CHANNEL)
+#    webhookKey: $(DISCORD_WEBHOOK)
+#    name: 'Azure DevOps'
+#    avatar: 'https://p2zk82o7hr3yb6ge7gzxx4ki-wpengine.netdna-ssl.com/wp-content/uploads/Azure-DevOps-3.png'
+#    messageType: 'content'
+#    content: 'Build Update for CM-MARATHON-PM: https://dev.azure.com/revature-training-uta/cm-marathon-pm/_build'
