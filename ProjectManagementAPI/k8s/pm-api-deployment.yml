@@ -15,7 +15,7 @@ spec:
         app: project-management-api
     spec:
       containers:
-        - image: mohammedyb/pmapi
+        - image: revtrainingacr.azurecr.io/project-management-api
           imagePullPolicy: Always
           name: project-management-api
           ports:
@@ -32,4 +32,3 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-
