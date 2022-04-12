@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pm-service
+  name: email-service
 spec:
   selector:
     app: email-api
