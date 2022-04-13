@@ -79,7 +79,7 @@ steps:
     kubernetesServiceConnection: 'MarathonCluster'
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
-    dockerRegistryEndpoint: 'https://revtrainingacr.azurecr.io/v2/'
+    dockerRegistryEndpoint: 'RevTrainingACR'
     imagePullSecrets: |
       '$(ACR_TOKEN)'
     containers: |
