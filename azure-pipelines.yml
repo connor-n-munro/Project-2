@@ -75,10 +75,10 @@ steps:
 - task: CmdLine@2
   displayName: 'ACR Login'
   inputs:
-    script: 'docker login revtrainingacr.azurecr.io  -u $(ACR_LOGIN) -p $(ACR_TOKEN)
+    script: 'docker login revtrainingacr.azurecr.io  -u $(ACR_LOGIN) -p $(ACR_TOKEN)'
 
 - task: KubernetesManifest@0
-  displayName: "Deploy Marathon to AKS"
+  displayName: 'Deploy Marathon API to AKS'
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
@@ -88,7 +88,7 @@ steps:
       $(MARATHON_IMAGE):latest
 
 - task: KubernetesManifest@0
-  displayName: "Deploy Email API to AKS"
+  displayName: 'Deploy Email API to AKS'
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
