@@ -62,7 +62,6 @@ steps:
     repository: $(MARATHON_IMAGE)
     command: 'buildAndPush'
     tags: |
-      $(Build.BuildId)
       latest
     Dockerfile: 'ProjectManagementAPI/Dockerfile' 
 
@@ -73,7 +72,6 @@ steps:
     repository: $(EMAIL_IMAGE)
     command: 'buildAndPush'
     tags: |
-      $(Build.BuildId)
       latest
     Dockerfile: 'Email2/Dockerfile'
 
