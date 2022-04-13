@@ -53,18 +53,7 @@ steps:
 - task: Docker@2
   displayName: 'Marathon Docker'
   inputs:
-    containerRegistry: 'MarathonDockerHub'
-    repository: $(MARATHON_IMAGE)
-    command: 'buildAndPush'
-    tags: |
-      $(Build.BuildId)
-      latest
-    Dockerfile: 'ProjectManagementAPI/Dockerfile' 
-
-- task: Docker@2
-  displayName: 'Marathon Docker (informal)'
-  inputs:
-    containerRegistry: 'MarathonDockerHub'
+    containerRegistry: 'RevTrainingACR'
     repository: $(MARATHON_IMAGE)
     command: 'buildAndPush'
     tags: |
