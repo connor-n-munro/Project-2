@@ -62,6 +62,17 @@ steps:
     Dockerfile: 'ProjectManagementAPI/Dockerfile' 
 
 - task: Docker@2
+  displayName: 'Marathon Docker (informal)'
+  inputs:
+    containerRegistry: 'MarathonDockerHub'
+    repository: $(MARATHON_IMAGE)
+    command: 'buildAndPush'
+    tags: |
+      $(Build.BuildId)
+      latest
+    Dockerfile: 'ProjectManagementAPI/Dockerfile' 
+
+- task: Docker@2
   displayName: 'Email API Docker'
   inputs:
     containerRegistry: 'MarathonDockerHub'
@@ -80,7 +91,7 @@ steps:
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
     containers: |
-      revtrainingacr.azurecr.io/project-management-api:latest
+      $(MARATHON_IMAGE):latest
 
 - task: KubernetesManifest@0
   displayName: "Deploy Email API to AKS"
@@ -90,7 +101,7 @@ steps:
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
     containers: |
-      revtrainingacr.azurecr.io/email-api:latest
+      $(EMAIL_IMAGE):latest
 
 #- task: ado-discord-webhook@1
 #  inputs:
