@@ -79,11 +79,8 @@ steps:
     kubernetesServiceConnection: 'MarathonCluster'
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
-    dockerRegistryEndpoint: 'RevTrainingACR'
-    imagePullSecrets: |
-      '$(ACR_TOKEN)'
     containers: |
-      $revtrainingacr.azurecr.io/(MARATHON_IMAGE):latest
+      $(MARATHON_IMAGE):latest
 
 - task: KubernetesManifest@0
   displayName: "Deploy Email API to AKS"
@@ -92,11 +89,8 @@ steps:
     kubernetesServiceConnection: 'MarathonCluster'
     namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
-    dockerRegistryEndpoint: 'RevTrainingACR'
-    imagePullSecrets: |
-      '$(ACR_TOKEN)'
     containers: |
-      $revtrainingacr.azurecr.io/(EMAIL_IMAGE):latest
+      $(EMAIL_IMAGE):latest
 
 #- task: ado-discord-webhook@1
 #  inputs:
