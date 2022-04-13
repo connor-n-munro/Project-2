@@ -72,12 +72,17 @@ steps:
       latest
     Dockerfile: 'Email2/Dockerfile'
 
+- task: CmdLine@2
+  displayName: 'ACR Login'
+  inputs:
+    script: 'docker login revtrainingacr.azurecr.io  -u $(ACR_LOGIN) -p $(ACR_TOKEN)
+
 - task: KubernetesManifest@0
   displayName: "Deploy Marathon to AKS"
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
-    namespace: 'default'
+    namespace: 'marathon'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
     containers: |
       $(MARATHON_IMAGE):latest
@@ -87,7 +92,7 @@ steps:
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
-    namespace: 'default'
+    namespace: 'marathon'
     manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
     containers: |
       $(EMAIL_IMAGE):latest
