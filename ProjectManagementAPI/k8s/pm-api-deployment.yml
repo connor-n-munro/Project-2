@@ -15,7 +15,7 @@ spec:
         app: project-management-api
     spec:
       containers:
-        - image: revtrainingacr.azurecr.io/project-management-api
+        - image: revtrainingacr.azurecr.io/revtrainingacr.azurecr.io/project-management-api
           imagePullPolicy: Always
           name: project-management-api
           ports:

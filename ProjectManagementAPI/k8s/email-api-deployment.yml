@@ -15,7 +15,7 @@ spec:
         app: email-api
     spec:
       containers:
-        - image: revtrainingacr.azurecr.io/email-api
+        - image: revtrainingacr.azurecr.io/revtrainingacr.azurecr.io/email-api
           imagePullPolicy: Always
           name: email-api
           ports:
