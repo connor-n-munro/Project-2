@@ -83,7 +83,7 @@ steps:
     imagePullSecrets: |
       '$(ACR_TOKEN)'
     containers: |
-      $revtrainingacr.azurecr.io(MARATHON_IMAGE):latest
+      $revtrainingacr.azurecr.io/(MARATHON_IMAGE):latest
 
 - task: KubernetesManifest@0
   displayName: "Deploy Email API to AKS"
@@ -96,7 +96,7 @@ steps:
     imagePullSecrets: |
       '$(ACR_TOKEN)'
     containers: |
-      $revtrainingacr.azurecr.io(EMAIL_IMAGE):latest
+      $revtrainingacr.azurecr.io/(EMAIL_IMAGE):latest
 
 #- task: ado-discord-webhook@1
 #  inputs:
