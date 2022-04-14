@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-management-dep
+  name: project-management-api
   labels:
     app: project-management-api
 spec:
@@ -15,7 +15,7 @@ spec:
         app: project-management-api
     spec:
       containers:
-        - image: revtrainingacr.azurecr.io/revtrainingacr.azurecr.io/project-management-api
+        - image: connormunro/project-management-api
           imagePullPolicy: Always
           name: project-management-api
           ports:
