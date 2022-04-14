@@ -50,30 +50,33 @@ steps:
   inputs:
     pollingTimeoutSec: $(SONARGATE_TIMEOUT)
 
+#- task: CmdLine@2
+#  displayName: 'ACR Login'
+#  inputs:
+#    script: 'docker login revtrainingacr.azurecr.io  -u $(ACR_LOGIN) -p $(ACR_TOKEN)'
+
 - task: Docker@2
   displayName: 'Marathon Docker'
   inputs:
-    containerRegistry: 'RevTrainingACR'
+    containerRegistry: 'MarathonDockerHub'
     repository: $(MARATHON_IMAGE)
     command: 'buildAndPush'
     tags: |
-      $(Build.BuildId)
       latest
     Dockerfile: 'ProjectManagementAPI/Dockerfile' 
 
 - task: Docker@2
   displayName: 'Email API Docker'
   inputs:
-    containerRegistry: 'RevTrainingACR'
+    containerRegistry: 'MarathonDockerHub'
     repository: $(EMAIL_IMAGE)
     command: 'buildAndPush'
     tags: |
-      $(Build.BuildId)
       latest
     Dockerfile: 'Email2/Dockerfile'
 
 - task: KubernetesManifest@0
-  displayName: "Deploy Marathon to AKS"
+  displayName: 'Deploy Marathon API to AKS'
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
@@ -83,7 +86,7 @@ steps:
       $(MARATHON_IMAGE):latest
 
 - task: KubernetesManifest@0
-  displayName: "Deploy Email API to AKS"
+  displayName: 'Deploy Email API to AKS'
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
