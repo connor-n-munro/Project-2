@@ -14,7 +14,7 @@ spring:
   datasource:
     username: postgres@postgres-eastus-001
     password: Opklnm98!
-    url: jdbc:sqlserver://postgres-eastus-001.database.windows.net:1433
+    url: jdbc:sqlserver://postgres-eastus-001.database.windows.net:1433/postgres
     driver-class-name: org.postgresql.Driver
     jpa:
       properties:
