@@ -80,7 +80,7 @@ steps:
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
-    namespace: 'marathon'
+    namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/pm-api-deployment.yml'
     containers: |
       $(MARATHON_IMAGE):latest
@@ -90,7 +90,7 @@ steps:
   inputs:
     action: 'deploy'
     kubernetesServiceConnection: 'MarathonCluster'
-    namespace: 'marathon'
+    namespace: 'default'
     manifests: 'ProjectManagementAPI/k8s/email-api-deployment.yml'
     containers: |
       $(EMAIL_IMAGE):latest
